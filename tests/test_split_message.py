@@ -40,3 +40,20 @@ def test_split_message_edge_case():
     fragments = list(split_message(html, max_len=4096))
     assert len(fragments) == 1, f"Expected 1 fragment, returned {len(fragments)}"
     assert fragments[0] == html, "Fragment 0 does not match the original html"
+
+
+def test_split_message_nested_tags():
+    expected_fragments = [
+        "<p><b>Hello, <i>world</i></b></p>",
+        ("<p>" + "A" * 4000 + "</p>"),
+    ]
+    fragments = list(split_message("".join(expected_fragments), max_len=4096))
+    assert len(fragments) == 2, f"Expected 2 fragment, returned {len(fragments)}"
+    assert fragments[0].endswith("</p>"), "Fragment 0 must end with </p>"
+    assert fragments[1].startswith("<p>"), "Fragment 1 must end with </p>"
+    assert (
+        fragments[0] == expected_fragments[0]
+    ), "Fragment 0 does not match the expected fragment"
+    assert (
+        fragments[1] == expected_fragments[1]
+    ), "Fragment 1 does not match the expected fragment"
