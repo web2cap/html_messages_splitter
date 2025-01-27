@@ -33,3 +33,10 @@ def test_split_message_invalid_length():
     html = "<p>Hello, world!</p>"
     with pytest.raises(ValueError, match="Cannot create fragments."):
         list(split_message(html, max_len=5))
+
+
+def test_split_message_edge_case():
+    html = "<p>" + "A" * 4089 + "</p>"
+    fragments = list(split_message(html, max_len=4096))
+    assert len(fragments) == 1, f"Expected 1 fragment, returned {len(fragments)}"
+    assert fragments[0] == html, "Fragment 0 does not match the original html"
