@@ -1,3 +1,5 @@
+import pytest
+
 from split_msg import split_message
 
 
@@ -25,3 +27,9 @@ def test_split_message_long_plain_text():
     assert (
         fragments[1] == "<p>" + "A" * 11 + "</p>"
     ), "Fragment 1 does not match the expected html"
+
+
+def test_split_message_invalid_length():
+    html = "<p>Hello, world!</p>"
+    with pytest.raises(ValueError, match="Cannot create fragments."):
+        list(split_message(html, max_len=5))
