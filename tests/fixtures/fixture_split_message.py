@@ -8,12 +8,6 @@ def sample_html_no_split():
 
 
 @pytest.fixture
-def sample_html_long_text():
-    """Fixture for long plain text wrapped in HTML."""
-    return "<p>" + "A" * 5000 + "</p>"
-
-
-@pytest.fixture
 def sample_html_edge_case_text():
     """Fixture where length text equal fragment max length."""
     return "<p>" + "A" * 4089 + "</p>"
