@@ -19,3 +19,9 @@ def sample_html_nested_tags_source_result():
     source = "<p><b>Hello, <i>world</i></b> " + "A" * 4063 + "</p>"
     result = ["<p><b>Hello, <i>world</i></b></p>", "<p> " + "A" * 4063 + "</p>"]
     return source, result
+
+
+@pytest.fixture
+def sample_html_multiple_splits():
+    """Fixture for HTML content that will require multiple splits."""
+    return ("<p>" + "A" * 93 + "</p>") * 3

@@ -47,3 +47,11 @@ def test_split_message_nested_tags(sample_html_nested_tags_source_result):
     assert (
         fragments[1] == expected_result[1]
     ), "Fragment 1 does not match the expected fragment."
+
+
+def test_split_message_multiple_splits(sample_html_multiple_splits):
+    """Test case for HTML content that requires multiple splits."""
+    fragments = list(split_message(sample_html_multiple_splits, max_len=100))
+    assert len(fragments) == 3, f"Expected 3 fragments, returned {len(fragments)}."
+    assert fragments[0].startswith("<p>"), "Fragment 0 should start with <p>."
+    assert fragments[2].endswith("</p>"), "Fragment 3 should end with </p>."
