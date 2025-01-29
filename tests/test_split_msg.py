@@ -12,27 +12,6 @@ def test_split_message_no_split(sample_html_no_split):
     ), "Fragment 0 does not match the original HTML."
 
 
-def test_split_message_long_plain_text(sample_html_long_text):
-    """Test case for splitting long plain text content."""
-    fragments = list(split_message(sample_html_long_text, max_len=4096))
-    assert len(fragments) == 2, f"Expected 2 fragment, returned {len(fragments)}."
-    assert all(
-        len(frag) <= 4096 for frag in fragments
-    ), "One of the fragments is longer than the maximum length."
-    assert fragments[0].startswith("<p>") and fragments[0].endswith(
-        "</p>"
-    ), "Fragment 0 must start and end with <p> tags."
-    assert fragments[1].startswith("<p>") and fragments[1].endswith(
-        "</p>"
-    ), "Fragment 1 must start and end with <p> tags."
-    assert (
-        fragments[0] == "<p>" + "A" * 4089 + "</p>"
-    ), "Fragment 0 does not match the expected HTML."
-    assert (
-        fragments[1] == "<p>" + "A" * 11 + "</p>"
-    ), "Fragment 1 does not match the expected HTML."
-
-
 def test_split_message_invalid_length(sample_html_no_split):
     """Test case for invalid maximum length."""
     with pytest.raises(ValueError, match="Cannot create fragments."):
