@@ -73,3 +73,17 @@ def test_split_message_split_at_tag_boundary(sample_html_split_at_block_tag):
     assert fragments[0].startswith("<p>"), "Second fragment must start with <b>."
     assert fragments[0].endswith("</b>"), "First fragment must end with </b>."
     assert fragments[1].startswith("<i>"), "Second fragment must start with <b>."
+
+
+def test_split_message_with_special_characters(sample_html_with_special_chars_list):
+    """Test case for HTML content with special characters like &amp;, &lt;, etc. \t \n"""
+    fragments = list(
+        split_message("".join(sample_html_with_special_chars_list), max_len=30)
+    )
+    assert len(fragments) == 2, f"Expected 2 fragments, returned {len(fragments)}."
+    assert (
+        fragments[0] == sample_html_with_special_chars_list[0]
+    ), "Fragment 0 does not match the expected fragment."
+    assert (
+        fragments[1] == sample_html_with_special_chars_list[1]
+    ), "Fragment 1 does not match the expected fragment."

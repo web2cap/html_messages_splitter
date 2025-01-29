@@ -37,3 +37,9 @@ def sample_html_long_single_tag():
 def sample_html_split_at_block_tag():
     """Fixture for HTML that should split at a tag boundary."""
     return "<p>Text</p><b>" + "B" * 393 + "</b><i>" + "C" * 393 + "</i>"
+
+
+@pytest.fixture
+def sample_html_with_special_chars_list():
+    """Fixture for HTML content with special characters."""
+    return ["<p>&lt;test&gt; &amp;</p>", "<p>others\t\n</p>"]
