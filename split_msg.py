@@ -20,6 +20,8 @@ def copy_tag_without_contents(tag: Tag) -> Tag:
 
     tag_copy = Tag(None, tag.builder, tag.name, tag.namespace, tag.nsprefix)
     tag_copy.attrs = dict(tag.attrs)
+    for attr in ("can_be_empty_element", "hidden"):
+        setattr(tag_copy, attr, getattr(tag, attr))
     return tag_copy
 
 
