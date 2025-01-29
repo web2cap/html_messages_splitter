@@ -9,6 +9,15 @@ BLOCK_TAGS = {"p", "b", "strong", "i", "ul", "ol", "div", "span"}
 
 
 def copy_tag_without_contents(tag: Tag) -> Tag:
+    """
+    Creates a copy of an HTML tag, preserving its attributes but removing its content.
+
+    Args:
+        tag (Tag): The HTML tag to copy.
+
+    Returns:
+        Tag: A new tag with the same attributes.
+    """
     root_tag = copy.copy(tag)
     root_tag.clear()
     return root_tag
@@ -17,6 +26,16 @@ def copy_tag_without_contents(tag: Tag) -> Tag:
 def split_html_by_border(elements: BeautifulSoup, border: int) -> BeautifulSoup:
     """
     Splits an HTML element into two parts, ensuring the first part fits within the specified `border`.
+
+    Args:
+        elements (BeautifulSoup): The HTML content to be split.
+        border (int): The maximum allowed length of the first part.
+
+    Returns:
+        BeautifulSoup: A BeautifulSoup object containing the first part of the split content.
+
+    Raises:
+        ValueError: If an element cannot be split.
     """
     if isinstance(elements, NavigableString):
         raise ValueError(f"Plain text string is not splittable: '{elements}'")
@@ -50,7 +69,7 @@ def split_html_by_border(elements: BeautifulSoup, border: int) -> BeautifulSoup:
                             )
                         if inner_border < 7:
                             raise ValueError(
-                                "Can't split: border {inner_border} lenght less then empty tag."
+                                f"Cannot split with border {inner_border}: left part length is less than empty tag size."
                             )
                     else:
                         raise ValueError(
@@ -66,16 +85,23 @@ def split_html_by_border(elements: BeautifulSoup, border: int) -> BeautifulSoup:
                     raise ValueError(
                         f"HTML separation failed, can't separate {inner_element} with border {inner_border}"
                     )
-                # separation was successful, break and return
+                # Separation was successful
                 break
 
         return left_chunk
 
 
-def split_message(source: str, max_len: int = MAX_LEN) -> Generator[str]:
-    """Splits the original message (`source`) into fragments of the specified length
-    (`max_len`)."""
+def split_message(source: str, max_len: int = MAX_LEN) -> Generator[str, None, None]:
+    """
+    Splits an HTML message into fragments, ensuring each fragment does not exceed `max_len`.
 
+    Args:
+        source (str): The original HTML message.
+        max_len (int): The maximum length of each fragment.
+
+    Yields:
+        str: A fragment of the HTML message that fits within `max_len`.
+    """
     if len(source) <= max_len:
         yield source
         return
