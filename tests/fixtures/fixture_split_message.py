@@ -20,9 +20,8 @@ def sample_html_edge_case_text():
 
 
 @pytest.fixture
-def sample_html_nested_tags_list():
-    """Fixture for HTML with nested tags."""
-    return [
-        "<p><b>Hello, <i>world</i></b></p>",
-        "<p>" + "A" * 4000 + "</p>",
-    ]
+def sample_html_nested_tags_source_result():
+    """Fixture for HTML with nested tags with lenght 4097."""
+    source = "<p><b>Hello, <i>world</i></b> " + "A" * 4063 + "</p>"
+    result = ["<p><b>Hello, <i>world</i></b></p>", "<p> " + "A" * 4063 + "</p>"]
+    return source, result

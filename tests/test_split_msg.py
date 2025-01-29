@@ -31,16 +31,19 @@ def test_split_message_edge_case(sample_html_edge_case_text):
     ), "Fragment 0 does not match the original HTML."
 
 
-def test_split_message_nested_tags(sample_html_nested_tags_list):
+def test_split_message_nested_tags(sample_html_nested_tags_source_result):
     """Test case for handling nested HTML tags."""
+    source, expected_result = sample_html_nested_tags_source_result
+    fragments = list(split_message(source, max_len=4096))
 
-    fragments = list(split_message("".join(sample_html_nested_tags_list), max_len=4096))
+    print(fragments)
+
     assert len(fragments) == 2, f"Expected 2 fragment, returned {len(fragments)}"
     assert fragments[0].endswith("</p>"), "Fragment 0 must end with </p>."
     assert fragments[1].startswith("<p>"), "Fragment 1 must end with </p>."
     assert (
-        fragments[0] == sample_html_nested_tags_list[0]
+        fragments[0] == expected_result[0]
     ), "Fragment 0 does not match the expected fragment."
     assert (
-        fragments[1] == sample_html_nested_tags_list[1]
+        fragments[1] == expected_result[1]
     ), "Fragment 1 does not match the expected fragment."
