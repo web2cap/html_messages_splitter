@@ -1,4 +1,3 @@
-import copy
 from typing import Generator
 
 from bs4 import BeautifulSoup, NavigableString, Tag
@@ -18,9 +17,10 @@ def copy_tag_without_contents(tag: Tag) -> Tag:
     Returns:
         Tag: A new tag with the same attributes.
     """
-    root_tag = copy.copy(tag)
-    root_tag.clear()
-    return root_tag
+
+    tag_copy = Tag(None, tag.builder, tag.name, tag.namespace, tag.nsprefix)
+    tag_copy.attrs = dict(tag.attrs)
+    return tag_copy
 
 
 def split_html_by_border(elements: BeautifulSoup, border: int) -> BeautifulSoup:
