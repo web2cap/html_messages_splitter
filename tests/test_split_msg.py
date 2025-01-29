@@ -87,3 +87,12 @@ def test_split_message_with_special_characters(sample_html_with_special_chars_li
     assert (
         fragments[1] == sample_html_with_special_chars_list[1]
     ), "Fragment 1 does not match the expected fragment."
+
+
+def test_split_message_no_split_required_for_many_tags_set(sample_html_many_tags_set):
+    """Test case for very large content, but no split required due to small max_len."""
+    fragments = list(split_message(sample_html_many_tags_set, max_len=10000))
+    assert len(fragments) == 1, f"Expected 1 fragment, returned {len(fragments)}."
+    assert (
+        fragments[0] == sample_html_many_tags_set
+    ), "The fragment should be the original content."

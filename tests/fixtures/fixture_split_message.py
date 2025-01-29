@@ -43,3 +43,9 @@ def sample_html_split_at_block_tag():
 def sample_html_with_special_chars_list():
     """Fixture for HTML content with special characters."""
     return ["<p>&lt;test&gt; &amp;</p>", "<p>others\t\n</p>"]
+
+
+@pytest.fixture
+def sample_html_many_tags_set():
+    """Fixture for very large content with many tags that doesn’t need splitting."""
+    return ("<p>10</p>\n") * 1000
