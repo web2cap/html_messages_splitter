@@ -55,3 +55,12 @@ def test_split_message_multiple_splits(sample_html_multiple_splits):
     assert len(fragments) == 3, f"Expected 3 fragments, returned {len(fragments)}."
     assert fragments[0].startswith("<p>"), "Fragment 0 should start with <p>."
     assert fragments[2].endswith("</p>"), "Fragment 3 should end with </p>."
+
+
+def test_split_message_large_single_tag(sample_html_long_single_tag):
+    """Test case where a single large tag exceeds the maximum length."""
+    with pytest.raises(
+        ValueError,
+        match=f"HTML separation failed, can't separate {sample_html_long_single_tag} with border {1000}",
+    ):
+        list(split_message(sample_html_long_single_tag, max_len=1000))

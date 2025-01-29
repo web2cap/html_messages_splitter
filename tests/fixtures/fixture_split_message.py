@@ -25,3 +25,9 @@ def sample_html_nested_tags_source_result():
 def sample_html_multiple_splits():
     """Fixture for HTML content that will require multiple splits."""
     return ("<p>" + "A" * 93 + "</p>") * 3
+
+
+@pytest.fixture
+def sample_html_long_single_tag():
+    """Fixture for a single long tag that exceeds max_len."""
+    return "<p>" + "A" * 5000 + "</p>"
