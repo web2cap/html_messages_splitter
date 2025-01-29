@@ -1,5 +1,6 @@
 from typing import Generator
 
+import click
 from bs4 import BeautifulSoup, NavigableString, Tag
 
 MAX_LEN = 4096
@@ -115,20 +116,34 @@ def split_message(source: str, max_len: int = MAX_LEN) -> Generator[str, None, N
         yield str(current_fragment).strip()
 
 
-if __name__ == "__main__":
-    file_name = "source.html"
-    try:
-        with open(file_name, "r") as file:
-            dev_source = file.read()
-    except FileNotFoundError:
-        raise FileNotFoundError(
-            f"File '{file_name}' not found. Please check the file path."
-        )
-    except Exception as err:
-        raise Exception(f"Unexpected error while opening '{file_name}': {repr(err)}")
+@click.command()
+@click.option(
+    "--max-len", default=MAX_LEN, help="Maximum length of each message fragment."
+)
+@click.argument("file_path", type=click.Path(exists=True))
+def main(max_len, file_path):
+    """
+    Reads an HTML file, splits its content into fragments, and prints them to stdout.
 
-    fragment_number = 1
-    for fragment in split_message(dev_source):
-        print(f"-- #{fragment_number}: {len(fragment)} chars --")
+    Args:
+        file_path (str): The path to the HTML file to be processed.
+        max_len (int): The maximum allowed length of each fragment.
+
+    Raises:
+        FileNotFoundError: If the specified file does not exist.
+        Exception: If an unexpected error occurs while reading the file.
+    """
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            dev_source = file.read()
+    except Exception as err:
+        raise click.ClickException(f"Error reading '{file_path}': {err}")
+
+    for i, fragment in enumerate(split_message(dev_source, max_len), start=1):
+        print(f"-- fragment #{i}: {len(fragment)} chars. --")
         print(fragment)
-        fragment_number += 1
+
+
+if __name__ == "__main__":
+    main()
