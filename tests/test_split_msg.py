@@ -14,7 +14,10 @@ def test_split_message_no_split(sample_html_no_split):
 
 def test_split_message_invalid_length(sample_html_no_split):
     """Test case for invalid maximum length."""
-    with pytest.raises(ValueError, match="Cannot create fragments."):
+    with pytest.raises(
+        ValueError,
+        match="Cannot split with border 5: left part length is less than empty tag size.",
+    ):
         list(split_message(sample_html_no_split, max_len=5))
 
 
