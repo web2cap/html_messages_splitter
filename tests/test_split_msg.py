@@ -64,3 +64,12 @@ def test_split_message_large_single_tag(sample_html_long_single_tag):
         match=f"HTML separation failed, can't separate {sample_html_long_single_tag} with border {1000}",
     ):
         list(split_message(sample_html_long_single_tag, max_len=1000))
+
+
+def test_split_message_split_at_tag_boundary(sample_html_split_at_block_tag):
+    """Test case for HTML that should split at a tag boundary."""
+    fragments = list(split_message(sample_html_split_at_block_tag, max_len=411))
+    assert len(fragments) == 2, f"Expected 2 fragments, returned {len(fragments)}."
+    assert fragments[0].startswith("<p>"), "Second fragment must start with <b>."
+    assert fragments[0].endswith("</b>"), "First fragment must end with </b>."
+    assert fragments[1].startswith("<i>"), "Second fragment must start with <b>."

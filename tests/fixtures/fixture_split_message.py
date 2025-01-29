@@ -31,3 +31,9 @@ def sample_html_multiple_splits():
 def sample_html_long_single_tag():
     """Fixture for a single long tag that exceeds max_len."""
     return "<p>" + "A" * 5000 + "</p>"
+
+
+@pytest.fixture
+def sample_html_split_at_block_tag():
+    """Fixture for HTML that should split at a tag boundary."""
+    return "<p>Text</p><b>" + "B" * 393 + "</b><i>" + "C" * 393 + "</i>"
