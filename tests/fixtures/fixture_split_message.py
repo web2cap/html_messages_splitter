@@ -49,3 +49,9 @@ def sample_html_with_special_chars_list():
 def sample_html_many_tags_set():
     """Fixture for very large content with many tags that doesn’t need splitting."""
     return ("<p>10</p>\n") * 1000
+
+
+@pytest.fixture
+def sample_html_empty_html_tag():
+    """Fixture for an empty HTML tag."""
+    return "<div></div>"

@@ -96,3 +96,12 @@ def test_split_message_no_split_required_for_many_tags_set(sample_html_many_tags
     assert (
         fragments[0] == sample_html_many_tags_set
     ), "The fragment should be the original content."
+
+
+def test_split_message_empty_html_tag(sample_html_empty_html_tag):
+    """Test case for an empty HTML tag to check how it is handled."""
+    fragments = list(split_message(sample_html_empty_html_tag, max_len=500))
+    assert len(fragments) == 1, f"Expected 1 fragment, returned {len(fragments)}."
+    assert (
+        fragments[0] == sample_html_empty_html_tag
+    ), "Fragment should contain the empty <div> tag."
