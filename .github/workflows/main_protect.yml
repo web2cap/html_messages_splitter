@@ -1,15 +1,27 @@
-name: main_test_push
+
+name: main_test
 
 on:
-  push:
+  pull_request:
     branches: [ "main" ]
 
 jobs:
-  prevent-direct-push:
-    if: github.event_name == 'push'
+  tests:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - name: Prevent direct pushes to main
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.13"
+      - name: Install dependencies
         run: |
-          echo "Direct pushes to main are not allowed."
-          exit 1
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip install --upgrade pip
+          pip install poetry
+          poetry config virtualenvs.create false
+          poetry install
+      - name: Test with pytest
+        run: pytest
