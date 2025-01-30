@@ -28,7 +28,7 @@ poetry install
 
 ### CLI
 ```
-poetry run python split_msg.py --max-len=3072 ./source.html
+poetry run python html_messages_splitter/split_msg.py --max-len=3072 ./source.html
 ```
 
 ### To use the split_message function in your Python code:
@@ -54,15 +54,18 @@ poetry run pytest
 ### Project Structure
 
 ```
+.
 ├── .github                  # Project workflow
-├── README.md                # Project documentation
-├── poetry.lock              # Poetry dependency lock file
-├── pyproject.toml           # Poetry configuration file
-├── pytest.ini               # Pytest configuration
-├── source.html              # Sample HTML source file
-├── split_msg.py             # Main script for message splitting
-└── tests                    # Unit tests
-    ├── conftest.py          # Pytest configuration file
-    ├── fixtures             # Test fixtures
-    ├── test_split_msg.py    # Unit tests for message splitter
+├── README.md                 
+├── html_messages_splitter    # Main package
+│   └── split_msg.py          # Core module
+├── poetry.lock               # Poetry dependency
+├── pyproject.toml            # Project configuration file
+├── pytest.ini                # Pytest configuration
+├── source.html               # Sample HTML file for testing
+└── tests                     
+    ├── conftest.py           # Global configuration
+    ├── fixtures               
+    └── test_split_msg.py     # Tests for split_msg module
+
 ```

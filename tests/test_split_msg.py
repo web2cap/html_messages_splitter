@@ -1,6 +1,6 @@
 import pytest
 
-from split_msg import split_message
+from html_messages_splitter.split_msg import split_message
 
 
 def test_split_message_no_split(sample_html_no_split):
