@@ -4,7 +4,8 @@ from os.path import abspath, dirname
 APPFILENAME = "split_msg.py"
 
 root_dir = dirname(dirname(abspath(__file__)))
-root_dir_content = os.listdir(root_dir)
+app_path = os.path.join(root_dir, "html_messages_splitter")
+root_dir_content = os.listdir(app_path)
 
 # check that the project structure is correct and split_msg.py is in place
 if APPFILENAME not in root_dir_content:
