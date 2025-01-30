@@ -55,3 +55,15 @@ def sample_html_many_tags_set():
 def sample_html_empty_html_tag():
     """Fixture for an empty HTML tag."""
     return "<div></div>"
+
+
+@pytest.fixture
+def sample_html_separation_after_line_break():
+    """Fixture for HTML content containing a <div> tag with a line break on character with index 34."""
+    return "<span><p>fp</p><div>\n<p>sp</p></div></span>"
+
+
+@pytest.fixture
+def sample_html_separation_in_empty_tag():
+    """Fixture contain an empty <span> tag inside an <i> tag."""
+    return "<i><span></span></i> s</i>"

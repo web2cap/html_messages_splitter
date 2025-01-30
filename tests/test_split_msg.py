@@ -105,3 +105,36 @@ def test_split_message_empty_html_tag(sample_html_empty_html_tag):
     assert (
         fragments[0] == sample_html_empty_html_tag
     ), "Fragment should contain the empty <div> tag."
+
+
+def test_html_separation_after_line_break(sample_html_separation_after_line_break):
+    """
+    Test that ensures correct splitting of HTML when a line break is present inside a tag.
+
+    Verifies that the first fragment contains the <div> tag with the line break.
+    And the second fragment does not.
+    """
+
+    fragments = list(split_message(sample_html_separation_after_line_break, max_len=35))
+    assert len(fragments) == 2, f"Expected 2 fragment, returned {len(fragments)}."
+    assert (
+        "<div>\n</div>" in fragments[0]
+    ), "Fragment 0 should contain <div> tag with line break."
+    assert (
+        "<div>\n" not in fragments[1]
+    ), "Fragment 1 should contain <div> tag without line break."
+
+
+def test_split_fails_on_empty_html_tag(sample_html_separation_in_empty_tag):
+    """
+    Test that ensures an exception is raised when trying to split an HTML string
+    containing an empty <span> tag.
+
+    The function should raise a ValueError with a specific error message indicating
+    that the <span> element has no content.
+    """
+    with pytest.raises(
+        ValueError,
+        match="HTML separation failed: element <span></span> has no content.",
+    ):
+        list(split_message(sample_html_separation_in_empty_tag, max_len=18))
