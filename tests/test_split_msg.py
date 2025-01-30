@@ -61,7 +61,7 @@ def test_split_message_large_single_tag(sample_html_long_single_tag):
     """Test case where a single large tag exceeds the maximum length."""
     with pytest.raises(
         ValueError,
-        match=f"HTML separation failed, can't separate {sample_html_long_single_tag} with border {1000}",
+        match=f"Plain text string is not splittable: '{"A" * 5000}'",
     ):
         list(split_message(sample_html_long_single_tag, max_len=1000))
 
