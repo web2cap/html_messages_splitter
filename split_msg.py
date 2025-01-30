@@ -58,8 +58,11 @@ def split_html_by_border(elements: BeautifulSoup, border: int) -> BeautifulSoup:
             else:
                 # If the current element exceeds the border, attempt to split it
                 inner_border = border - left_chunk_len
-
-                if not left_chunk.contents:
+                try:
+                    if inner_border < 7:
+                        raise ValueError(
+                            f"Cannot split with border {inner_border}: left part length is less than empty tag size."
+                        )
                     if isinstance(inner_element, Tag):
                         # If the left chunk is still empty and separation isn't possible
                         if inner_element.name not in BLOCK_TAGS:
@@ -70,24 +73,19 @@ def split_html_by_border(elements: BeautifulSoup, border: int) -> BeautifulSoup:
                             raise ValueError(
                                 f"HTML separation failed: element {inner_element} has no content."
                             )
-                        if inner_border < 7:
-                            raise ValueError(
-                                f"Cannot split with border {inner_border}: left part length is less than empty tag size."
-                            )
+
                     else:
                         raise ValueError(
                             f"Plain text string is not splittable: '{inner_element}'"
                         )
-                try:
+
                     left_inner_chunk = split_html_by_border(inner_element, inner_border)
                     left_chunk.append(left_inner_chunk)
-                except ValueError:
+                except ValueError as original_error:
                     if left_chunk.contents:
                         # If splitting fails but the left chunk is not empty, break and return left chunk
                         break
-                    raise ValueError(
-                        f"HTML separation failed, can't separate {inner_element} with border {inner_border}"
-                    )
+                    raise original_error
                 # Separation was successful
                 break
 
