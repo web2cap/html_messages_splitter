@@ -49,9 +49,12 @@ for fragment split_message(html_content, max_len=30):
 poetry run pytest
 ```
 
+### GitHub Actions
+
+This project is integrated with GitHub Actions, which automates the testing process on every pull request to the main branch. When a pull request is opened or updated, the CI workflow automatically runs tests on the changes to ensure everything functions correctly.
 
 
-### Project Structure
+## Project Structure
 
 ```
 .
@@ -69,3 +72,4 @@ poetry run pytest
     └── test_split_msg.py     # Tests for split_msg module
 
 ```
+
