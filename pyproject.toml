@@ -1,5 +1,6 @@
 [project]
-name = "html-messages-splitter"
+package-mode = false
+name = "html_messages_splitter"
 version = "0.1.0"
 description = "A tool to split HTML into valid fragments under a character limit."
 authors = [
@@ -7,7 +8,7 @@ authors = [
 ]
 license = {text = "MIT"}
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 dependencies = [
     "pytest (>=8.3.4,<9.0.0)",
     "bs4 (>=0.0.2,<0.0.3)",
