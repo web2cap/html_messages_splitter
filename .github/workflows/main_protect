@@ -1,0 +1,15 @@
+name: main_test_push
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  prevent-direct-push:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prevent direct pushes to main
+        run: |
+          echo "Direct pushes to main are not allowed."
+          exit 1
